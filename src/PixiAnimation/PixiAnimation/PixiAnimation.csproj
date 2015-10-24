@@ -63,40 +63,11 @@
     <Content Include="Content\images\door.png" />
     <Content Include="Content\images\dungeon.png" />
     <Content Include="Content\images\explorer.png" />
-    <Content Include="Content\images\rabbit_hare.png" />
-    <Content Include="Content\images\screenshots\01.png" />
-    <Content Include="Content\images\screenshots\02.png" />
-    <Content Include="Content\images\screenshots\03.png" />
-    <Content Include="Content\images\screenshots\04.png" />
-    <Content Include="Content\images\screenshots\05.png" />
-    <Content Include="Content\images\screenshots\06.png" />
-    <Content Include="Content\images\screenshots\07.png" />
-    <Content Include="Content\images\screenshots\08.png" />
-    <Content Include="Content\images\screenshots\09.png" />
-    <Content Include="Content\images\screenshots\10.png" />
-    <Content Include="Content\images\screenshots\11.png" />
-    <Content Include="Content\images\screenshots\12.png" />
-    <Content Include="Content\images\screenshots\13.png" />
-    <Content Include="Content\images\screenshots\14.png" />
-    <Content Include="Content\images\screenshots\15.png" />
-    <Content Include="Content\images\screenshots\16.png" />
-    <Content Include="Content\images\screenshots\17.png" />
-    <Content Include="Content\images\screenshots\18.png" />
-    <Content Include="Content\images\screenshots\19.png" />
-    <Content Include="Content\images\screenshots\20.png" />
-    <Content Include="Content\images\screenshots\21.png" />
-    <Content Include="Content\images\screenshots\22.png" />
-    <Content Include="Content\images\screenshots\23.png" />
-    <Content Include="Content\images\screenshots\24.png" />
-    <Content Include="Content\images\screenshots\25.png" />
-    <Content Include="Content\images\screenshots\26.png" />
-    <Content Include="Content\images\screenshots\27.png" />
-    <Content Include="Content\images\screenshots\28.png" />
-    <Content Include="Content\images\screenshots\29.png" />
     <Content Include="Content\images\tileset.png" />
     <Content Include="Content\images\treasure.png" />
     <Content Include="Content\images\treasureHunter.png" />
     <Content Include="Content\images\wolf.png" />
+    <Content Include="Content\collision-detection.js" />
     <Content Include="Content\pixi.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -105,9 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Content\images\animals.json" />
-    <Content Include="Content\images\screenshots\26.ai" />
-    <Content Include="Content\images\treasureHunter.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
