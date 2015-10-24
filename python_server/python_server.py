@@ -24,7 +24,7 @@ class StringGeneratorWebService(object):
         value = input_json["picture"]
         game_name = input_json["game_name"]
         decoded = base64.b64decode(value[0])
-        data[game_name] = decoded
+        self.data[game_name] = decoded
         #print decoded
         #db = sqlite3.connect(DATABASE_PATH)
         #db.execute('CREATE TABLE t (thebin BLOB)')
