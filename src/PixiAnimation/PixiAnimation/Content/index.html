@@ -4,101 +4,133 @@
 <body>
     <script src="collision-detection.js"></script>
     <script src="pixi.js"></script>
-<script>
+    <script>
 
-//Aliases
-var Container = PIXI.Container,
-    autoDetectRenderer = PIXI.autoDetectRenderer,
-    loader = PIXI.loader,
-    resources = PIXI.loader.resources,
-    TextureCache = PIXI.utils.TextureCache,
-    Texture = PIXI.Texture,
-    Sprite = PIXI.Sprite;
+        //Aliases
+        var Container = PIXI.Container,
+            autoDetectRenderer = PIXI.autoDetectRenderer,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Texture = PIXI.Texture,
+            Sprite = PIXI.Sprite;
 
-//Create a Pixi stage and renderer and add the 
-//renderer.view to the DOM
-var size = 256 * 2;
-var stage = new Container(),
-    renderer = autoDetectRenderer(size, size);
-document.body.appendChild(renderer.view);
+        //Create a Pixi stage and renderer and add the
+        //renderer.view to the DOM
+        var size = 256 * 2;
+        var stage = new Container(),
+            renderer = autoDetectRenderer(size, size);
+        document.body.appendChild(renderer.view);
 
-loader
-  .add("images/cat.png")
-  .add("images/door.png")
-  .add("images/wolf.png")
-  .load(setup);
+        loader
+          .add("images/cat.png")
+          .add("images/door.png")
+          .add("images/wolf.png")
+          .load(setup);
 
-//Define any variables that are used in more than one function
-var cat;
-var door;
-var obstacle;
+        //Define any variables that are used in more than one function
+        var cat;
+        var door;
+        var obstacle;
 
-function setup() {
+        function setup() {
 
-  //Create the `cat` sprite 
-  cat = new Sprite(resources["images/cat.png"].texture);
-  cat.y = 96; 
-  stage.addChild(cat);
+            //Create the `cat` sprite
+            cat = new Sprite(resources["images/cat.png"].texture);
+            cat.y = 96;
+            cat.y = 66;
+            stage.addChild(cat);
 
-  door = new Sprite(resources["images/door.png"].texture);
-  door.y = size - 50; 
-  door.x = size - 50; 
-  stage.addChild(door);
- 
-  obstacle = new Sprite(resources["images/wolf.png"].texture);
-  obstacle.y = size - 90; 
-  obstacle.x = size - 90; 
-  stage.addChild(obstacle);
- 
-  //Start the game loop
-  gameLoop();
-}
+            door = new Sprite(resources["images/door.png"].texture);
+            door.y = size - 50;
+            door.x = size - 50;
+            stage.addChild(door);
 
-var direction = {
-    x:3,
-    y:5
-}
+            obstacle = new Sprite(resources["images/wolf.png"].texture);
+            obstacle.y = size - 90;
+            obstacle.x = size - 90;
+            stage.addChild(obstacle);
 
-function changeDirection(point) {
-    if(point.x + point.width >= size) {
-        direction.x = -direction.x;
-    }
-	
-	if(point.x <= 0) {
-	    direction.x = -direction.x;
-	}
-	
-	if(point.y + point.height >= size) {
-		direction.y = -direction.y;
-	}
-	
-	if(point.y <= 0) {
-		direction.y = -direction.y;
-	}
-}
+            //Start the game loop
+            gameLoop();
+        }
 
-function gameLoop(){
+        var direction = {
+            x: 3,
+            y: 5
+        }
 
-  //Loop this function 60 times per second
-  requestAnimationFrame(gameLoop);
+        function cloneObject(object) {
 
-  //Move the cat 1 pixel per frame
-  cat.x += direction.x;
-  cat.y += direction.y;
-  
-  changeDirection(cat);
+        }
 
-  var boom = hitTestRectangle(cat, door);
-    if (boom) {
-        alert("boom");
+        function changeDirectionCausedByObstacle(point, obstacle) {
+            var isHit = hitTestRectangle(point, obstacle);
 
-	    direction.x = -direction.x;
-	    direction.y = -direction.y;
-    }
-  //Render the stage
-  renderer.render(stage);
-}
-</script>
+            if (!isHit) {
+                return;
+            }
+
+            // try if going back will cause to not to be overlapping
+
+
+            if (point.x + point.width >= obstacle.x) {
+                direction.x = -direction.x;
+            }
+
+            if (point.x <= obstacle.x + obstacle.width) {
+                direction.x = -direction.x;
+            }
+
+            if (point.y + point.height >= obstacle.y) {
+                direction.y = -direction.y;
+            }
+
+            if (point.y <= obstacle.y + obstacle.height) {
+                direction.y = -direction.y;
+            }
+        }
+
+        function changeDirection(point) {
+            if (point.x + point.width >= size) {
+                direction.x = -direction.x;
+            }
+
+            if (point.x <= 0) {
+                direction.x = -direction.x;
+            }
+
+            if (point.y + point.height >= size) {
+                direction.y = -direction.y;
+            }
+
+            if (point.y <= 0) {
+                direction.y = -direction.y;
+            }
+        }
+
+        function gameLoop() {
+
+            //Loop this function 60 times per second
+            requestAnimationFrame(gameLoop);
+
+            //Move the cat 1 pixel per frame
+            cat.x += direction.x;
+            cat.y += direction.y;
+
+            changeDirectionCausedByObstacle(cat, obstacle);
+            // Obstacle must be resolved first
+            changeDirection(cat);
+
+            var boom = hitTestRectangle(cat, door);
+            if (boom) {
+                alert("boom");
+
+                direction.x = -direction.x;
+                direction.y = -direction.y;
+            }
+            //Render the stage
+            renderer.render(stage);
+        }
+    </script>
 </body>
-
-
