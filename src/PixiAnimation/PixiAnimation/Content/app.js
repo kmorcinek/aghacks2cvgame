@@ -47,6 +47,15 @@ Sprite.prototype.move = function () {
 }
 
 function refreshMarkers() {
+    var trimToFitVenue = function(value) {
+        var fitValue = size - 200;
+        if (value > fitValue) {
+            value = fitValue;
+        }
+
+        return value;
+    }
+
     var url = "http://178.62.103.235/?game_name=qwerty";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
@@ -56,12 +65,11 @@ function refreshMarkers() {
             var point = positions[0];
             console.log(point);
 
-            cat.x = parseInt(point.x) / 2;
-            cat.y = parseInt(point.y) / 2;
+            cat.x = trimToFitVenue(parseInt(point.x));
+            cat.y = trimToFitVenue(parseInt(point.y));
         } else {
             console.log("marker not found");
         }
-
     });
 }
 
