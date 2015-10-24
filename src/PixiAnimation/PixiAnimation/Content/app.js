@@ -14,11 +14,13 @@ var stage = new Container(),
     renderer = autoDetectRenderer(size, size);
 document.body.appendChild(renderer.view);
 
-loader
-  .add("images/cat.png")
-  .add("images/door.png")
-  .add("images/wolf.png")
-  .load(setup);
+$(function() {
+    loader
+        .add("images/cat.png")
+        .add("images/door.png")
+        .add("images/wolf.png")
+        .load(setup);
+});
 
 //Define any variables that are used in more than one function
 var cat;
