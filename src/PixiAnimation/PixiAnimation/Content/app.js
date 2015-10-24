@@ -121,7 +121,7 @@ function gameLoop() {
 
     cat.move();
 
-    changeDirectionCausedByObstacle(cat, obstacle);
+    //changeDirectionCausedByObstacle(cat, obstacle);
     // Obstacle must be resolved first
     changeDirection(cat);
 
