@@ -8,10 +8,14 @@ import sqlite3
 import vision.dummy_wrapper
 
 DATABASE_PATH = "~/db.sql"
+testowa_gra = ""
+with open('majortestsmaller2.jpg') as f:
+    testowa_gra = f.read()
+
 
 class StringGeneratorWebService(object):
     exposed = True
-    data = {}
+    data = {"testowa_gra":testowa_gra}
     @cherrypy.tools.accept(media='application/json')
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
