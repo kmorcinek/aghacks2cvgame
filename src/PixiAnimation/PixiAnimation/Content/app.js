@@ -25,28 +25,26 @@ var cat;
 var door;
 var obstacle;
 
-function setup() {
+Sprite.prototype.invertVX = function () {
+    // forget how to do self=this better 
+    this.vx = -this.vx;
+}
 
-    //Create the `cat` sprite
+Sprite.prototype.invertVY = function () {
+    this.vy = -this.vy;
+}
+
+Sprite.prototype.move = function () {
+    this.x += this.vx;
+    this.y += this.vy;
+}
+
+function setup() {
     cat = new Sprite(resources["images/cat.png"].texture);
     cat.x = 96;
     cat.y = 66;
     cat.vx = 3;
     cat.vy = 5;
-
-    Sprite.prototype.invertVX = function () {
-        // forget how to do self=this better 
-        this.vx = -this.vx;
-    }
-
-    Sprite.prototype.invertVY = function () {
-        this.vy = -this.vy;
-    }
-
-    Sprite.prototype.move = function () {
-        this.x += this.vx;
-        this.y += this.vy;
-    }
 
     stage.addChild(cat);
 
@@ -58,11 +56,9 @@ function setup() {
     obstacle = new Sprite(resources["images/wolf.png"].texture);
     obstacle.y = size - 140;
     obstacle.x = size - 170;
-    stage.addChild(obstacle);
+    //stage.addChild(obstacle);
 
-    //Start the game loop
     gameLoop();
-    //testObstacleCollistion();
 }
 
 function cloneMovingObjectProperties(object) {
