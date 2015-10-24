@@ -9,7 +9,7 @@ import vision.dummy_wrapper
 
 DATABASE_PATH = "~/db.sql"
 testowa_gra = ""
-with open('majortestsmaller2.jpg') as f:
+with open('python_server/vision/majortestsmaller2.jpg') as f:
     testowa_gra = f.read()
 
 
