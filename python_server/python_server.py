@@ -37,13 +37,13 @@ class StringGeneratorWebService(object):
         return result
 
 
-    def GET(self,game_name):
-        detector = vision.dummy_wrapper.Detect(self.data[game_name])
-        return detector.detect()
-
-    def picture(self,game_name):
-        cherrypy.response.headers['Content-Type'] = "image/jpg"
-        return self.data[game_name]
+    def GET(self,game_name,pic=""):
+        if pic == "":
+            detector = vision.dummy_wrapper.Detect(self.data[game_name])
+            return detector.detect()
+        else:
+            cherrypy.response.headers['Content-Type'] = "image/jpg"
+            return self.data[game_name]
 
 if __name__ == '__main__':
     conf = {
