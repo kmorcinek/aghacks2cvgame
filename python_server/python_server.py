@@ -6,8 +6,8 @@ import json
 import base64
 import sqlite3
 import vision.dummy_wrapper
+import simplejson
 
-DATABASE_PATH = "~/db.sql"
 testowa_gra = ""
 with open('python_server/vision/majortestsmaller2.jpg') as f:
     testowa_gra = f.read()
@@ -18,7 +18,10 @@ class StringGeneratorWebService(object):
 
     @cherrypy.expose
     def send_android(self):
-        input_json = cherrypy.request.json
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        body = simplejson.loads(rawbody)
+        input_json = body
         value = input_json["picture"]
         game_name = input_json["game_name"]
         decoded = base64.b64decode(value[0])
