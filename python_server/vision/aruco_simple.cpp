@@ -25,9 +25,11 @@ int main(int argc,char **argv)
         ss<<"[";
         //for each marker, draw info and its boundaries in the image
         for (unsigned int i=0;i<Markers.size();i++) {
-            ss<<"{\"id\":\""<<Markers[i].id<<"\",positions:[";
-            for (int j = 0; j < 4; j++)
-                ss << "{\"x\":" << Markers[i][j].x << ",\"y\":" << Markers[i][j].y << "},";
+            ss<<"{\"id\":\""<<Markers[i].id<<"\",\"positions\":[";
+            for (int j = 0; j < 4; j++){
+                ss << "{\"x\":" << Markers[i][j].x << ",\"y\":" << Markers[i][j].y << "}";
+                if (j!=3) ss <<",";
+        }
             ss<<"]}";
             //Markers[i].draw(InImage,Scalar(0,0,255),2);
             if(i != Markers.size()-1) ss<<",";
