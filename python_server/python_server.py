@@ -50,4 +50,7 @@ if __name__ == '__main__':
             'tools.response_headers.headers': [('Content-Type', 'application/json')],
         }
     }
+    cherrypy.config.update({'server.socket_host': '0.0.0.0',
+                        'server.socket_port': 80,
+                       })
     cherrypy.quickstart(StringGeneratorWebService(), '/', conf)
