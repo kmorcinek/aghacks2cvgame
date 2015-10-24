@@ -7,9 +7,10 @@ var Container = PIXI.Container,
     Texture = PIXI.Texture,
     Sprite = PIXI.Sprite;
 
-var size = 256 * 2;
+var sizeX = 512 * 2;
+var sizeY = 512;
 var stage = new Container(),
-    renderer = autoDetectRenderer(size, size);
+    renderer = autoDetectRenderer(sizeX, sizeY);
 document.body.appendChild(renderer.view);
 
 $(function() {
@@ -17,8 +18,8 @@ $(function() {
         .add("images/cat.png")
         .add("images/door.png")
         .add("images/wolf.png")
+        .add("http://178.62.103.235/?game_name=qwerty&pic=true")
         .load(setup);
-
 
     function myFunction() {
         setInterval(function () { refreshMarkers(); }, 3000);
@@ -26,6 +27,28 @@ $(function() {
 
     myFunction();
 });
+
+var pictureRefreshCounter = 0;
+
+function addNewImage() {
+    pictureRefreshCounter++;
+    var sprite = PIXI.Sprite.fromImage("http://178.62.103.235/?game_name=qwerty&pic=" + pictureRefreshCounter);
+    sprite.position.x = 100;
+    sprite.position.y = 100;
+    stage.addChild(sprite);
+
+    ////Add text as a child of the Sprite
+    //var text = new PIXI.Text('my custom text',
+    //    {
+    //        font: '12px Arial',
+    //        fill: 0x666666,
+    //        align: 'center',
+    //        cacheAsBitmap: true, // for better performance
+    //        height: 57,
+    //        width: 82
+    //    });
+    //sprite.addChild(text);
+}
 
 //Define any variables that are used in more than one function
 var cat;
@@ -47,26 +70,35 @@ Sprite.prototype.move = function () {
 }
 
 function refreshMarkers() {
-    var trimToFitVenue = function(value) {
-        var fitValue = size - 200;
-        if (value > fitValue) {
-            value = fitValue;
+    var trimToFitVenue = function(pointValue) {
+        var fitValueX = sizeX - 200;
+        if (pointValue.x > fitValueX) {
+            pointValue.x = fitValueX;
         }
 
-        return value;
+        var fitValueY = sizeY - 200;
+        if (pointValue.y > fitValueY) {
+            pointValue.y = fitValueY;
+        }
     }
 
     var url = "http://178.62.103.235/?game_name=qwerty";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
+        addNewImage();
+
         if (marker) {
             var positions = marker.positions;
             var point = positions[0];
+            point.x = parseInt(point.x);
+            point.y = parseInt(point.y);
+            trimToFitVenue(point);
+
             console.log(point);
 
-            cat.x = trimToFitVenue(parseInt(point.x));
-            cat.y = trimToFitVenue(parseInt(point.y));
+            cat.x = point.x;
+            cat.y = point.y;
         } else {
             console.log("marker not found");
         }
@@ -80,26 +112,17 @@ function setup() {
     cat.vx = 2;
     cat.vy = 3;
 
-    var url = "http://178.62.103.235/?game_name=qwerty";
-    //var url = "data/markers.json";
-    $.getJSON(url, function (data) {
-        var positions = data[0].positions;
-        var point = positions[0];
-        console.log(point);
-        //alert(data);
-    });
-
     stage.addChild(cat);
 
     door = new Sprite(resources["images/door.png"].texture);
-    door.y = size - 50;
-    door.x = size - 50;
+    door.x = sizeX - 50;
+    door.y = sizeY - 50;
     stage.addChild(door);
 
-    obstacle = new Sprite(resources["images/wolf.png"].texture);
-    obstacle.y = size - 140;
-    obstacle.x = size - 170;
-    //stage.addChild(obstacle);
+    obstacle = new Sprite(resources["http://178.62.103.235/?game_name=qwerty&pic=true"].texture);
+    obstacle.x = 0;
+    obstacle.y = sizeY - 140;
+    stage.addChild(obstacle);
 
     gameLoop();
 }
@@ -134,7 +157,7 @@ function changeDirectionCausedByObstacle(point, obstacle) {
 }
 
 function changeDirection(point) {
-    if (point.x + point.width >= size) {
+    if (point.x + point.width >= sizeX) {
         point.invertVX();
     }
 
@@ -142,7 +165,7 @@ function changeDirection(point) {
         point.invertVX();
     }
 
-    if (point.y + point.height >= size) {
+    if (point.y + point.height >= sizeY) {
         point.invertVY();
     }
 
