@@ -2,6 +2,7 @@
     <string name="app_name">CvGame</string>
     <string name="title_activity_image_capture">ImageCaptureActivity</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="give_game_name">Enter game name!</string>
     <string name="action_settings">Settings</string>
+    <string name="game_start">Start game!!!</string>
 </resources>
