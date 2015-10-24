@@ -9,8 +9,34 @@
                 tools:context="aghacks.cvgame.ImageCaptureActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:text="@string/give_game_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/name_label"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/game_id"
+        android:text="qwerty"
+        android:layout_below="@+id/name_label"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_button"
+        android:onClick="buttonAction"
+        android:layout_below="@+id/game_id"
+        android:textSize="30dp"
+        android:text="@string/game_start"
+        android:layout_centerHorizontal="true"/>
+    <FrameLayout
+        android:layout_width="480px"
+        android:layout_height="640px"
+        android:id="@+id/surface_view"
+        android:layout_below="@+id/register_button"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

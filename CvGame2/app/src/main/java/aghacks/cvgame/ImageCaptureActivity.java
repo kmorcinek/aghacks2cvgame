@@ -1,14 +1,17 @@
 package aghacks.cvgame;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,7 +38,49 @@ import java.util.concurrent.ScheduledFuture;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-public class ImageCaptureActivity extends ActionBarActivity {
+public class ImageCaptureActivity extends Activity {
+	private static final String url = "http://178.62.103.235";
+
+	FrameLayout frameLayout;
+	private String gameId = new String();
+
+	public void buttonAction(View v) {
+		EditText editText = (EditText) findViewById(R.id.game_id);
+		gameId = editText.getText().toString();
+
+		if (gameId.length() < 3) {
+			Toast.makeText(context, "Game name must be at least 3 characters long",Toast.LENGTH_LONG).show();
+		} else {
+			Runnable pictureRunnable = new Runnable() {
+				@Override
+				public void run() {
+					try {
+						int cameraNumber = Camera.getNumberOfCameras();
+						System.out.println("Number of camera:" + cameraNumber);
+						Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+						Camera.getCameraInfo(0, cameraInfo);
+
+						System.out.println(cameraInfo.toString());
+						System.out.print(c.getParameters().toString());
+						if (c != null) {
+							//System.out.println("Taking picture");
+							width = c.getParameters().getPictureSize().width;
+							height = c.getParameters().getPictureSize().height;
+							c.takePicture(null, null, null, jpegPictureCallback);
+							System.out.println("Picture taken");
+
+						} else {
+							System.out.println("Cannot access camera.");
+						}
+					} catch (Exception e) {
+						System.out.println("Camera error");
+						e.printStackTrace();
+					}
+				}
+			};
+			pictureScheduledFuture = scheduler.scheduleAtFixedRate(pictureRunnable, 0, 5000, MILLISECONDS);
+		}
+	}
 
 	private static File getOutputMediaFile(int type) {
 		// To be safe, you should check that the SDCard is mounted
@@ -81,6 +126,7 @@ public class ImageCaptureActivity extends ActionBarActivity {
 	Camera.PictureCallback jpegPictureCallback;
 	Camera.PictureCallback postviewPictureCallback;
 	Camera c;
+
 	Context context;
 	int width, height;
 
@@ -95,14 +141,6 @@ public class ImageCaptureActivity extends ActionBarActivity {
 		queue.start();
 		jpegPictureCallback = new Camera.PictureCallback() {
 			public void onPictureTaken(byte[] data, Camera camera) {
-
-
-				//int[] intData = new int[data.length];
-				//for(int i = 0; i<data.length; i++){
-				//	intData[i] = -(data[i]-127);
-				//}
-
-
 				File f = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 				try {
 					FileOutputStream fos = new FileOutputStream(f);
@@ -114,30 +152,28 @@ public class ImageCaptureActivity extends ActionBarActivity {
 					e.printStackTrace();
 				}
 
-				//File readFile = new File(f.getAbsolutePath());
-				//readFile.
+				//frameLayout = (FrameLayout) findViewById(R.id.surface_view);
 
+				CameraPreview cameraPreview = new CameraPreview(context, c);
+				frameLayout.addView(cameraPreview);
 				Bitmap bm = BitmapFactory.decodeFile(f.getAbsolutePath());
-				//b.getPixel()
-
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
 				byte[] b = baos.toByteArray();
 				String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 
 				JSONArray jsonArray = new JSONArray();
-				//for (int i = 0; i < data.length; i++) {
-					jsonArray.put(encodedImage);
-				//
+				jsonArray.put(encodedImage);
 				JSONObject jsonObject = new JSONObject();
 				try {
 					jsonObject.put("picture", jsonArray);
+					//TODO
+					jsonObject.put("game_name", gameId);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				String url = "http://10.0.2.2:8080";
-				System.out.println("Sending picture to python server");
-				Toast.makeText(context, "Send picture", Toast.LENGTH_SHORT).show();
+				//System.out.println("Sending picture to python server");
+				//Toast.makeText(context, "Send picture", Toast.LENGTH_SHORT).show();
 				JsonObjectRequest jsonObjectRequest =
 						new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
 							@Override
@@ -164,48 +200,31 @@ public class ImageCaptureActivity extends ActionBarActivity {
 			}
 		};
 
-		c = Camera.open(); // attempt to get a Camera instance
-		Runnable pictureRunnable = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					//int cameraNumber = Camera.getNumberOfCameras();
-					//System.out.println("Number of camera:" + cameraNumber);
-					Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-					Camera.getCameraInfo(0, cameraInfo);
+		c = Camera.open(0); // attempt to get a Camera instance
+		Camera.Parameters params = c.getParameters();
+		params.setPictureSize(1600, 1200);
+		c.setParameters(params);
+		c.setDisplayOrientation(90);
+		frameLayout = (FrameLayout) findViewById(R.id.surface_view);
 
-					//System.out.println(cameraInfo.toString());
-					//System.out.print(c.getParameters().toString());
-					if (c != null) {
-						//System.out.println("Taking picture");
-						width = c.getParameters().getPictureSize().width;
-						height = c.getParameters().getPictureSize().height;
-						c.takePicture(null, null, postviewPictureCallback, jpegPictureCallback);
-						//System.out.println("Picture taken");
+		CameraPreview cameraPreview = new CameraPreview(context, c);
+		frameLayout.addView(cameraPreview);
 
+		//SurfaceHolder surfaceHolder = surfaceView.getHolder();
+		//c.setPreviewDisplay(surfaceHolder);
+		//c.startPreview();
 
-					} else {
-						System.out.println("Cannot access camera.");
-					}
-				} catch (Exception e) {
-					System.out.println("Camera error");
-					e.printStackTrace();
-				}
-			}
-		};
-		pictureScheduledFuture = scheduler.scheduleAtFixedRate(pictureRunnable, 0, 5000, MILLISECONDS);
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (c!=null){
+		if (c != null) {
 			c.release();
 		}
-		if (pictureScheduledFuture!=null)
-		{
+		if (pictureScheduledFuture != null) {
 			pictureScheduledFuture.cancel(true);
 		}
-		if (scheduler!=null){
+		if (scheduler != null) {
 			scheduler.shutdown();
 		}
 
