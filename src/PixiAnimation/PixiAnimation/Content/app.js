@@ -119,6 +119,8 @@ function setup() {
     cat = new Sprite(resources["images/cat.png"].texture);
     cat.x = 96;
     cat.y = 66;
+    
+    // initial speed
     cat.vx = 2;
     cat.vy = 3;
 
