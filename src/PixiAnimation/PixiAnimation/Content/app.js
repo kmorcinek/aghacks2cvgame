@@ -48,12 +48,20 @@ Sprite.prototype.move = function () {
 
 function refreshMarkers() {
     var url = "http://178.62.103.235/?game_name=qwerty";
-    $.getJSON(url, function (data) {
-        var positions = data[0].positions;
-        var point = positions[0];
-        console.log(point);
-        cat.x = 100;
-        cat.y = 100;
+    $.getJSON(url, function (list) {
+        var marker = _.findWhere(list, { "id": "64" });
+
+        if (marker) {
+            var positions = marker.positions;
+            var point = positions[0];
+            console.log(point);
+
+            cat.x = parseInt(point.x) / 2;
+            cat.y = parseInt(point.y) / 2;
+        } else {
+            console.log("marker not found");
+        }
+
     });
 }
 
@@ -61,8 +69,8 @@ function setup() {
     cat = new Sprite(resources["images/cat.png"].texture);
     cat.x = 96;
     cat.y = 66;
-    cat.vx = 3;
-    cat.vy = 5;
+    cat.vx = 2;
+    cat.vy = 3;
 
     var url = "http://178.62.103.235/?game_name=qwerty";
     //var url = "data/markers.json";
