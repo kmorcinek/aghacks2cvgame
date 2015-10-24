@@ -48,6 +48,10 @@ function setup() {
     cat.vx = 3;
     cat.vy = 5;
 
+    $.getJSON("data/markers.json", function(data) {
+        alert(data);
+    });
+        
     stage.addChild(cat);
 
     door = new Sprite(resources["images/door.png"].texture);
