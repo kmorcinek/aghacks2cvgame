@@ -60,8 +60,13 @@
             y: 5
         }
 
-        function cloneObject(object) {
-
+        function cloneMovingObjectProperties(object) {
+            return {
+                x: object.x,
+                y: object.y,
+                width: object.width,
+                height: object.height
+            };
         }
 
         function changeDirectionCausedByObstacle(point, obstacle) {
@@ -72,21 +77,12 @@
             }
 
             // try if going back will cause to not to be overlapping
-
-
-            if (point.x + point.width >= obstacle.x) {
+            var clone = cloneMovingObjectProperties(point);
+            clone.x -= direction.x;
+            if (hitTestRectangle(clone, object)) {
+                // not overlapping anymore to so in x axis we go back 
                 direction.x = -direction.x;
-            }
-
-            if (point.x <= obstacle.x + obstacle.width) {
-                direction.x = -direction.x;
-            }
-
-            if (point.y + point.height >= obstacle.y) {
-                direction.y = -direction.y;
-            }
-
-            if (point.y <= obstacle.y + obstacle.height) {
+            } else {
                 direction.y = -direction.y;
             }
         }
