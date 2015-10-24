@@ -20,9 +20,11 @@ $(function() {
         .load(setup);
 
 
-    //function myFunction() {
-    //    setInterval(function () { alert("Hello"); }, 3000);
-    //}
+    function myFunction() {
+        setInterval(function () { refreshMarkers(); }, 3000);
+    }
+
+    myFunction();
 });
 
 //Define any variables that are used in more than one function
@@ -44,6 +46,16 @@ Sprite.prototype.move = function () {
     this.y += this.vy;
 }
 
+function refreshMarkers() {
+    var url = "http://178.62.103.235/?game_name=qwerty";
+    $.getJSON(url, function (data) {
+        var positions = data[0].positions;
+        var point = positions[0];
+        console.log(point);
+        cat.x = 100;
+        cat.y = 100;
+    });
+}
 
 function setup() {
     cat = new Sprite(resources["images/cat.png"].texture);
@@ -52,7 +64,7 @@ function setup() {
     cat.vx = 3;
     cat.vy = 5;
 
-    var url = "http://178.62.103.235/?game_name=testowa_gra";
+    var url = "http://178.62.103.235/?game_name=qwerty";
     //var url = "data/markers.json";
     $.getJSON(url, function (data) {
         var positions = data[0].positions;
