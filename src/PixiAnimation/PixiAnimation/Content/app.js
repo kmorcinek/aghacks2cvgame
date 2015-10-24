@@ -18,7 +18,7 @@ $(function() {
         .add("images/cat.png")
         .add("images/door.png")
         .add("images/wolf.png")
-        .add("http://178.62.103.235/?game_name=qwerty&pic=true")
+        .add("http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=true")
         .load(setup);
 
     function myFunction() {
@@ -35,7 +35,7 @@ var globalTexture;
 function addNewImage() {
     pictureRefreshCounter++;
 
-    var radnomImage = "http://178.62.103.235/?game_name=qwerty&pic=" + pictureRefreshCounter;
+    var radnomImage = "http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=" + pictureRefreshCounter;
 
     if (globalTexture) {
         globalTexture.destroy(true);
@@ -92,7 +92,7 @@ function refreshMarkers() {
         }
     }
 
-    var url = "http://178.62.103.235/detector?game_name=qwerty";
+    var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
@@ -130,7 +130,7 @@ function setup() {
     stage.addChild(door);
 
 
-    obstacle = new Sprite(resources["http://178.62.103.235/?game_name=qwerty&pic=true"].texture);
+    obstacle = new Sprite(resources["http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=true"].texture);
     obstacle.x = 0;
     obstacle.y = sizeY - 140;
     //stage.addChild(obstacle);
