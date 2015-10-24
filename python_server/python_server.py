@@ -6,7 +6,6 @@ import json
 import base64
 import sqlite3
 import vision.dummy_wrapper
-import simplejson
 
 testowa_gra = ""
 with open('python_server/vision/majortestsmaller2.jpg') as f:
@@ -37,6 +36,13 @@ class StringGeneratorWebService(object):
     def zdjecie(self,game_name):
         cherrypy.response.headers['Content-Type'] = "image/jpg"
         return self.data[game_name]
+
+    @cherrypy.expose
+    def hgame(self):
+        s = ""
+        with open("python_server/hgame.html") as f:
+            ss = f.read()
+        return s
 
 if __name__ == '__main__':
     conf = {
