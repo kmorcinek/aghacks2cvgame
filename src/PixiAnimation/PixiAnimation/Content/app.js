@@ -18,7 +18,6 @@ $(function() {
         .add("images/cat.png")
         .add("images/door.png")
         .add("images/wolf.png")
-        .add("http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=true")
         .load(setup);
 
     function myFunction() {
@@ -35,7 +34,7 @@ var globalTexture;
 function addNewImage() {
     pictureRefreshCounter++;
 
-    var radnomImage = "http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=" + pictureRefreshCounter;
+    var radnomImage = "http://178.62.103.235/zdjecie?game_name=" + Constants.gameName + "&pic=" + pictureRefreshCounter;
 
     if (globalTexture) {
         globalTexture.destroy(true);
@@ -130,12 +129,6 @@ function setup() {
     door.x = sizeX - 50;
     door.y = sizeY - 50;
     stage.addChild(door);
-
-
-    obstacle = new Sprite(resources["http://178.62.103.235/?game_name=" + Constants.gameName + "&pic=true"].texture);
-    obstacle.x = 0;
-    obstacle.y = sizeY - 140;
-    //stage.addChild(obstacle);
 
     gameLoop();
 }
