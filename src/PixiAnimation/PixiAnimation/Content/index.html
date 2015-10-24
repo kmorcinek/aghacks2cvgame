@@ -37,8 +37,11 @@
 
             //Create the `cat` sprite
             cat = new Sprite(resources["images/cat.png"].texture);
-            cat.y = 96;
+            cat.x = 96;
             cat.y = 66;
+            cat.vx = 3;
+            cat.vy = 5;
+
             stage.addChild(cat);
 
             door = new Sprite(resources["images/door.png"].texture);
@@ -53,11 +56,6 @@
 
             //Start the game loop
             gameLoop();
-        }
-
-        var direction = {
-            x: 3,
-            y: 5
         }
 
         function cloneMovingObjectProperties(object) {
@@ -89,19 +87,19 @@
 
         function changeDirection(point) {
             if (point.x + point.width >= size) {
-                direction.x = -direction.x;
+                point.vx = -point.vx;
             }
 
             if (point.x <= 0) {
-                direction.x = -direction.x;
+                point.vx = -point.vx;
             }
 
             if (point.y + point.height >= size) {
-                direction.y = -direction.y;
+                point.vy = -point.vy;
             }
 
             if (point.y <= 0) {
-                direction.y = -direction.y;
+                point.vy = -point.vy;
             }
         }
 
@@ -110,8 +108,8 @@
             //Loop this function 60 times per second
             requestAnimationFrame(gameLoop);
 
-            cat.x += direction.x;
-            cat.y += direction.y;
+            cat.x += cat.vx;
+            cat.y += cat.vy;
 
             //changeDirectionCausedByObstacle(cat, obstacle);
             // Obstacle must be resolved first
@@ -121,8 +119,8 @@
             if (boom) {
                 alert("boom");
 
-                direction.x = -direction.x;
-                direction.y = -direction.y;
+                cat.vx = -cat.vx;
+                cat.vy = -cat.vy;
             }
             //Render the stage
             renderer.render(stage);
