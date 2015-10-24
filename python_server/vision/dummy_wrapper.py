@@ -7,7 +7,7 @@ class Detect(object):
 		self.image = image
 
 	def detect(self):
-		with open("tempfile.png",'w') as f:
+		with open("./python_server/vision/tempfile.png",'w') as f:
 			f.write(self.image) 
-		output = subprocess.check_output(["./aruco_simple","tempfile.png"])
+		output = subprocess.check_output(["./python_server/vision/aruco_simple","./python_server/vision/tempfile.png"])
 		return output

@@ -29,7 +29,7 @@ class StringGeneratorWebService(object):
         #db = sqlite3.connect(DATABASE_PATH)
         #db.execute('CREATE TABLE t (thebin BLOB)')
         #db.execute('INSERT INTO pictures VALUES(?)', [buffer(decoded),game_name])
-        #db.commit()
+        #db.commit()  
         #db.close()
         #with open('/home/lukasz/Programowanie/hackaton/img.jpg', 'wb')as file:
         #    file.write(decoded)

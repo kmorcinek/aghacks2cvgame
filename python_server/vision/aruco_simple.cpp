@@ -25,7 +25,7 @@ int main(int argc,char **argv)
         ss<<"[";
         //for each marker, draw info and its boundaries in the image
         for (unsigned int i=0;i<Markers.size();i++) {
-            ss<<"{\"id:\""<<Markers[i].id<<"\",poitions:[";
+            ss<<"{\"id:\""<<Markers[i].id<<"\",positions:[";
             for (int j = 0; j < 4; j++)
                 ss << "{\"x\":" << Markers[i][j].x << ",\"y\":" << Markers[i][j].y << "} ";
             ss<<"]}";
