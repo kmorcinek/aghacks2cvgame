@@ -30,13 +30,23 @@ $(function() {
 
 var pictureRefreshCounter = 0;
 
+var globalTexture;
+
 function addNewImage() {
     pictureRefreshCounter++;
-    var sprite = PIXI.Sprite.fromImage("http://178.62.103.235/?game_name=qwerty&pic=" + pictureRefreshCounter);
-    sprite.position.x = 100;
-    sprite.position.y = 100;
-    stage.addChild(sprite);
 
+    var radnomImage = "http://178.62.103.235/?game_name=qwerty&pic=" + pictureRefreshCounter;
+
+    if (globalTexture) {
+        globalTexture.destroy(true);
+    }
+
+    globalTexture = PIXI.Texture.fromImage(radnomImage);
+    obstacle = new PIXI.Sprite(globalTexture);
+    obstacle.x = 0;
+    obstacle.y = 0;
+    stage.addChild(obstacle);
+    
     ////Add text as a child of the Sprite
     //var text = new PIXI.Text('my custom text',
     //    {
@@ -82,7 +92,7 @@ function refreshMarkers() {
         }
     }
 
-    var url = "http://178.62.103.235/?game_name=qwerty";
+    var url = "http://178.62.103.235/detector?game_name=qwerty";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
@@ -119,10 +129,11 @@ function setup() {
     door.y = sizeY - 50;
     stage.addChild(door);
 
+
     obstacle = new Sprite(resources["http://178.62.103.235/?game_name=qwerty&pic=true"].texture);
     obstacle.x = 0;
     obstacle.y = sizeY - 140;
-    stage.addChild(obstacle);
+    //stage.addChild(obstacle);
 
     gameLoop();
 }
