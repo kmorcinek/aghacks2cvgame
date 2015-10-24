@@ -7,8 +7,6 @@ var Container = PIXI.Container,
     Texture = PIXI.Texture,
     Sprite = PIXI.Sprite;
 
-//Create a Pixi stage and renderer and add the
-//renderer.view to the DOM
 var size = 256 * 2;
 var stage = new Container(),
     renderer = autoDetectRenderer(size, size);
@@ -20,6 +18,11 @@ $(function() {
         .add("images/door.png")
         .add("images/wolf.png")
         .load(setup);
+
+
+    //function myFunction() {
+    //    setInterval(function () { alert("Hello"); }, 3000);
+    //}
 });
 
 //Define any variables that are used in more than one function
@@ -41,6 +44,7 @@ Sprite.prototype.move = function () {
     this.y += this.vy;
 }
 
+
 function setup() {
     cat = new Sprite(resources["images/cat.png"].texture);
     cat.x = 96;
@@ -48,10 +52,15 @@ function setup() {
     cat.vx = 3;
     cat.vy = 5;
 
-    $.getJSON("data/markers.json", function(data) {
-        alert(data);
+    var url = "http://178.62.103.235/?game_name=testowa_gra";
+    //var url = "data/markers.json";
+    $.getJSON(url, function (data) {
+        var positions = data[0].positions;
+        var point = positions[0];
+        console.log(point);
+        //alert(data);
     });
-        
+
     stage.addChild(cat);
 
     door = new Sprite(resources["images/door.png"].texture);
