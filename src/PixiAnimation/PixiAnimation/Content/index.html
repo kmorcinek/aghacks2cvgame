@@ -110,7 +110,6 @@
             //Loop this function 60 times per second
             requestAnimationFrame(gameLoop);
 
-            //Move the cat 1 pixel per frame
             cat.x += direction.x;
             cat.y += direction.y;
 
@@ -128,5 +127,23 @@
             //Render the stage
             renderer.render(stage);
         }
+
+        function testObstacleCollistion() {
+            var object = {
+                x: 0,
+                y: 0,
+                width: 10,
+                height: 10
+            }
+
+            var obstacle = {
+                x: 15,
+                y: 0,
+                width: 10,
+                height: 10
+            }
+        }
+
+        testObstacleCollistion();
     </script>
 </body>
