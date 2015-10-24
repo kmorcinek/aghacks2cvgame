@@ -17,11 +17,10 @@ class StringGeneratorWebService(object):
     data = {"testowa_gra":testowa_gra}
 
     @cherrypy.expose
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
     def send_android(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        body = simplejson.loads(rawbody)
-        input_json = body
+        input_json = cherrypy.request.json
         value = input_json["picture"]
         game_name = input_json["game_name"]
         decoded = base64.b64decode(value[0])
