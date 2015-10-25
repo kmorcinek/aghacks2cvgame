@@ -172,26 +172,3 @@ function gameLoop() {
     //Render the stage
     renderer.render(stage);
 }
-
-function assert(value) {
-    if (!value) {
-        alert("bug in test");
-    }
-}
-
-function testObstacleCollistion() {
-    var object = new Sprite(resources["images/door.png"].texture);
-    object.x = 0;
-    object.y = 0;
-    object.width = 10;
-    object.height = 10;
-
-    var obstacle = new Sprite(resources["images/wolf.png"].texture);
-    object.x = 15;
-    object.y = 0;
-    object.width = 10;
-    object.height = 10;
-
-    object.move();
-    assert(hitTestRectangle(object, obstacle));
-}
