@@ -58,6 +58,7 @@
   <ItemGroup>
     <Content Include="Content\app.js" />
     <None Include="Content\data\markers.json" />
+    <Content Include="Content\images\cannon.png" />
     <Content Include="Content\index.html" />
     <Content Include="Content\images\animals.png" />
     <Content Include="Content\images\blob.png" />

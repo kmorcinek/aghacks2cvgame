@@ -20,6 +20,7 @@ $(function() {
         .add("images/blob.png")
         .add("images/door.png")
         .add("images/wolf.png")
+        .add("images/cannon.png")
         .load(setup);
 
     function refresh() {
@@ -45,6 +46,7 @@ function addNewImage() {
 var ball;
 var door;
 var obstacle;
+var cannon;
 
 function refreshMarkers() {
     var trimToFitVenue = function(pointValue) {
@@ -84,6 +86,9 @@ function refreshMarkers() {
             ball.x = point.x;
             ball.y = point.y;
 
+            cannon.x = point.x;
+            cannon.y = point.y;
+
             var speedRatio = 0.02;
             ball.vx = deltaX * speedRatio;
             ball.vy = deltaY * speedRatio;
@@ -108,6 +113,11 @@ function setup() {
     door.x = sizeX - 50;
     door.y = sizeY - 50;
     stage.addChild(door);
+
+    cannon = new Sprite(resources["images/cannon.png"].texture);
+    cannon.x = 0;
+    cannon.y = 0;
+    stage.addChild(cannon);
 
     gameLoop();
 }
