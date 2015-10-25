@@ -24,7 +24,7 @@ $(function() {
         .load(setup);
 
     function refresh() {
-        setInterval(function () { refreshMarkers(); }, 3000);
+        setInterval(function () { refreshMarkers(); }, Constants.refreshInternal);
     }
 
     refresh();
@@ -131,6 +131,7 @@ function setup() {
     cannon.y = 0;
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
+    cannon.rotation = 0.5;
     stage.addChild(cannon);
 
     gameLoop();

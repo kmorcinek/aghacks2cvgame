@@ -1,3 +1,4 @@
 var Constants = {
-    gameName: "qwerty"
+    gameName: "qwerty",
+    refreshInternal: 5 * 1000
 }
