@@ -141,20 +141,31 @@ var addObstacle = function (x, y) {
 
 function setup() {
     ball = new Sprite(resources["images/blob.png"].texture);
+
     ball.x = ball.width / 2 + 1;
     ball.y = ball.height / 2 + 1;
+
+    //if (Constants.runAtStartup) {
+    //    ball.x = ball.width / 2 + 1;
+    //    ball.y = ball.height / 2 + 1;
+    //}
+
     ball.anchor.x = 0.5;
     ball.anchor.y = 0.5;
     
     // initial speed
-    ball.vx = 4;
-    ball.vy = 7;
+    ball.vx = 0;
+    ball.vy = 0;
+    if (Constants.runAtStartup) {
+        ball.vx = 4;
+        ball.vy = 7;
+    }
 
     stage.addChild(ball);
 
     target = new Sprite(resources["images/door.png"].texture);
-    target.x = sizeX - 50;
-    target.y = sizeY - 50;
+    target.x = sizeX + 50;
+    target.y = sizeY + 50;
     target.anchor.x = 0.5;
     target.anchor.y = 0.5;
     stage.addChild(target);
