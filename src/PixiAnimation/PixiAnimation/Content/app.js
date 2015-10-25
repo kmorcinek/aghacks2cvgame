@@ -95,7 +95,7 @@ function refreshMarkers() {
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
-        addNewImage();
+        //addNewImage();
 
         if (marker) {
             var positions = marker.positions;
@@ -106,8 +106,18 @@ function refreshMarkers() {
 
             console.log(point);
 
+            var firstPoint = positions[0];
+            var secondPoint = positions[1];
+
+            var deltaX = firstPoint.x = secondPoint.x;
+            var deltaY = firstPoint.y = secondPoint.y;
+
             cat.x = point.x;
             cat.y = point.y;
+
+            var speedRatio = 0.3;
+            cat.vx = deltaX * speedRatio;
+            cat.vy = deltaY * speedRatio;
         } else {
             console.log("marker not found");
         }
