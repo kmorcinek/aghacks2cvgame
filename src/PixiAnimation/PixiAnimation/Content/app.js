@@ -156,8 +156,10 @@ function setup() {
         return obstacle;
     }
 
-    obstacles.push(addObstacle(500, 500));
-    obstacles.push(addObstacle(300, 300));
+    if (Constants.showObstacles) {
+        obstacles.push(addObstacle(500, 500));
+        obstacles.push(addObstacle(300, 300));
+    }
 
     gameLoop();
 }

@@ -1,5 +1,6 @@
 var Constants = {
     gameName: "qwerty",
-    refreshInternal: 5 * 1000,
-    speedRatio: 0.06
+    refreshInternal: 10 * 1000,
+    speedRatio: 0.03,
+    showObstacles: false
 }
