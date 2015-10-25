@@ -17,7 +17,7 @@ document.body.appendChild(renderer.view);
 
 $(function() {
     loader
-        .add("images/cat.png")
+        .add("images/blob.png")
         .add("images/door.png")
         .add("images/wolf.png")
         .load(setup);
@@ -94,7 +94,7 @@ function refreshMarkers() {
 }
 
 function setup() {
-    ball = new Sprite(resources["images/cat.png"].texture);
+    ball = new Sprite(resources["images/blob.png"].texture);
     ball.x = 96;
     ball.y = 66;
     
