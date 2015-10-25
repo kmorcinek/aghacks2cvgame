@@ -71,6 +71,7 @@
     <Content Include="Content\images\wolf.png" />
     <Content Include="Content\collision-detection.js" />
     <Content Include="Content\pixi.js" />
+    <Content Include="Content\scripts\Sprite.js" />
     <Content Include="Content\scripts\constants.js" />
     <Content Include="Content\scripts\jquery-2.1.4.min.js" />
     <Content Include="Content\scripts\underscore-min.js" />

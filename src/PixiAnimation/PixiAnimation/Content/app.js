@@ -7,8 +7,10 @@ var Container = PIXI.Container,
     Texture = PIXI.Texture,
     Sprite = PIXI.Sprite;
 
+// Size of canvas
 var sizeX = 512 * 2;
 var sizeY = 512;
+
 var stage = new Container(),
     renderer = autoDetectRenderer(sizeX, sizeY);
 document.body.appendChild(renderer.view);
@@ -63,20 +65,6 @@ function addNewImage() {
 var cat;
 var door;
 var obstacle;
-
-Sprite.prototype.invertVX = function () {
-    // forget how to do self=this better 
-    this.vx = -this.vx;
-}
-
-Sprite.prototype.invertVY = function () {
-    this.vy = -this.vy;
-}
-
-Sprite.prototype.move = function () {
-    this.x += this.vx;
-    this.y += this.vy;
-}
 
 function refreshMarkers() {
     var trimToFitVenue = function(pointValue) {
