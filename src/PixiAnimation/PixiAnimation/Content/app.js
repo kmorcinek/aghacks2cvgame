@@ -74,6 +74,7 @@ function refreshCallback() {
 
         cannon.x = secondMiddle.x;
         cannon.y = secondMiddle.y;
+        cannon.rotation = Math.atan(deltaX / deltaY);
 
         ball.vx = deltaX * Constants.speedRatio;
         ball.vy = deltaY * Constants.speedRatio;
