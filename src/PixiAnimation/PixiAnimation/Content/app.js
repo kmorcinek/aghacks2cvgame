@@ -222,7 +222,7 @@ function gameLoop() {
 
     var boom = hitTestRectangle(ball, target);
     if (boom) {
-        alert("boom");
+        alert("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMM");
 
         ball.invertVX();
         ball.invertVY();
