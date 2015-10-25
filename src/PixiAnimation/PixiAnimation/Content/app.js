@@ -12,7 +12,7 @@ var sizeX = 512 * 2;
 var sizeY = 512;
 
 var stage = new Container(),
-    renderer = autoDetectRenderer(sizeX, sizeY);
+    renderer = autoDetectRenderer(sizeX, sizeY, {"transparent":true});
 document.body.appendChild(renderer.view);
 
 $(function() {
