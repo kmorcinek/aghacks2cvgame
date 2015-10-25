@@ -129,6 +129,8 @@ function setup() {
     cannon = new Sprite(resources["images/cannon.png"].texture);
     cannon.x = 0;
     cannon.y = 0;
+    cannon.anchor.x = 0.5;
+    cannon.anchor.y = 0.5;
     stage.addChild(cannon);
 
     gameLoop();
