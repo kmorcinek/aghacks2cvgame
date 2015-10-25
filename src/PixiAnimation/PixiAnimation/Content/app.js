@@ -24,7 +24,7 @@ $(function() {
         .load(setup);
 
     function refresh() {
-        setInterval(function () { refreshMarkers(); }, Constants.refreshInternal);
+        setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
     }
 
     refresh();
@@ -48,7 +48,7 @@ var door;
 var obstacle;
 var cannon;
 
-function refreshMarkers() {
+function refreshCallback() {
     var trimToFitVenue = function(pointValue) {
         var fitValueX = sizeX - 200;
         if (pointValue.x > fitValueX) {
@@ -75,22 +75,14 @@ function refreshMarkers() {
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     //var url = "data/markers.json";
     $.getJSON(url, function (list) {
-        addNewImage();
-
         var marker = _.findWhere(list, { "id": "64" });
         var secondMarker = _.findWhere(list, { "id": "908" });
 
-        var firstMiddle = calculateMiddle(marker.positions);
-        var secondMiddle = calculateMiddle(secondMarker.positions);
+        if (marker && secondMarker) {
+            addNewImage();
 
-        if (marker) {
-            var positions = marker.positions;
-            var point = positions[0];
-            point.x = parseInt(point.x);
-            point.y = parseInt(point.y);
-            trimToFitVenue(point);
-
-            console.log(point);
+            var firstMiddle = calculateMiddle(marker.positions);
+            var secondMiddle = calculateMiddle(secondMarker.positions);
 
             var deltaX = firstMiddle.x - secondMiddle.x;
             var deltaY = firstMiddle.y - secondMiddle.y;
