@@ -76,7 +76,16 @@ function refreshCallback() {
                 && m.id !== targetMarkerId;
         });
 
-        
+        _.each(obstacles, function(obstacle) {
+            stage.removeChild(obstacle);
+        });
+
+        obstacles = [];
+            
+        _.each(obstacleMarkers, function(marker) {
+            var middle = calculateMiddle(marker.positions);
+            obstacles.push(addObstacle(middle.x, middle.y));
+        });
     }
 
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
@@ -111,10 +120,23 @@ function refreshCallback() {
                 target.x = targetMiddle.x;
                 target.y = targetMiddle.y;
             }
+
+            setObstacles(list);
         } else {
             console.log("marker not found");
         }
     });
+}
+
+var addObstacle = function (x, y) {
+    var obstacle = new Sprite(resources["images/obstacle.png"].texture);
+    obstacle.x = x;
+    obstacle.y = y;
+    obstacle.anchor.x = 0.5;
+    obstacle.anchor.y = 0.5;
+    stage.addChild(obstacle);
+
+    return obstacle;
 }
 
 function setup() {
@@ -144,17 +166,6 @@ function setup() {
     cannon.anchor.y = 0.5;
     cannon.rotation = 0.5;
     stage.addChild(cannon);
-
-    var addObstacle = function(x, y) {
-        var obstacle = new Sprite(resources["images/obstacle.png"].texture);
-        obstacle.x = x;
-        obstacle.y = y;
-        obstacle.anchor.x = 0.5;
-        obstacle.anchor.y = 0.5;
-        stage.addChild(obstacle);
-
-        return obstacle;
-    }
 
     if (Constants.showObstacles) {
         obstacles.push(addObstacle(500, 500));
