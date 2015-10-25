@@ -19,7 +19,7 @@ $(function() {
     loader
         .add("images/blob.png")
         .add("images/door.png")
-        .add("images/wolf.png")
+        .add("images/obstacle.png")
         .add("images/cannon.png")
         .load(setup);
 
@@ -139,6 +139,18 @@ function setup() {
     cannon.anchor.y = 0.5;
     cannon.rotation = 0.5;
     stage.addChild(cannon);
+
+    var addObstacle = function(x, y) {
+        var cannon = new Sprite(resources["images/obstacle.png"].texture);
+        cannon.x = x;
+        cannon.y = y;
+        cannon.anchor.x = 0.5;
+        cannon.anchor.y = 0.5;
+        stage.addChild(cannon);
+    }
+
+    addObstacle(500, 500);
+    addObstacle(300, 300);
 
     gameLoop();
 }
