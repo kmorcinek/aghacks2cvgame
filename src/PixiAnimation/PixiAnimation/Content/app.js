@@ -49,18 +49,6 @@ var obstacle;
 var cannon;
 
 function refreshCallback() {
-    var trimToFitVenue = function(pointValue) {
-        var fitValueX = sizeX - 200;
-        if (pointValue.x > fitValueX) {
-            pointValue.x = fitValueX;
-        }
-
-        var fitValueY = sizeY - 200;
-        if (pointValue.y > fitValueY) {
-            pointValue.y = fitValueY;
-        }
-    }
-
     var calculateMiddle = function(corners) {
         var sumX = 0, sumY = 0;
 
@@ -72,6 +60,25 @@ function refreshCallback() {
         return { "x": sumX / 4, "y": sumY / 4 };
     }
 
+    var refreshBoard = function (marker, secondMarker) {
+        addNewImage();
+
+        var firstMiddle = calculateMiddle(marker.positions);
+        var secondMiddle = calculateMiddle(secondMarker.positions);
+
+        var deltaX = firstMiddle.x - secondMiddle.x;
+        var deltaY = firstMiddle.y - secondMiddle.y;
+
+        ball.x = firstMiddle.x;
+        ball.y = firstMiddle.y;
+
+        cannon.x = secondMiddle.x;
+        cannon.y = secondMiddle.y;
+
+        ball.vx = deltaX * Constants.speedRatio;
+        ball.vy = deltaY * Constants.speedRatio;
+    }
+
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     //var url = "data/markers.json";
     $.getJSON(url, function (list) {
@@ -79,22 +86,7 @@ function refreshCallback() {
         var secondMarker = _.findWhere(list, { "id": "908" });
 
         if (marker && secondMarker) {
-            addNewImage();
-
-            var firstMiddle = calculateMiddle(marker.positions);
-            var secondMiddle = calculateMiddle(secondMarker.positions);
-
-            var deltaX = firstMiddle.x - secondMiddle.x;
-            var deltaY = firstMiddle.y - secondMiddle.y;
-
-            ball.x = firstMiddle.x;
-            ball.y = firstMiddle.y;
-
-            cannon.x = secondMiddle.x;
-            cannon.y = secondMiddle.y;
-
-            ball.vx = deltaX * Constants.speedRatio;
-            ball.vy = deltaY * Constants.speedRatio;
+            refreshBoard(marker, secondMarker);
         } else {
             console.log("marker not found");
         }
