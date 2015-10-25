@@ -61,10 +61,25 @@ function refreshMarkers() {
         }
     }
 
+    var calculateMiddle = function(corners) {
+        var sumX = 0, sumY = 0;
+
+        for (var i = 0; i < 4; i++) {
+            sumX += corners[i].x;
+            sumY += corners[i].y;
+        }
+
+        return { "x": sumX / 4, "y": sumY / 4 };
+    }
+
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     //var url = "data/markers.json";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
+        var secondMarker = _.findWhere(list, { "id": "908" });
+
+        var firstMiddle = calculateMiddle(marker.positions);
+        var secondMiddle = calculateMiddle(secondMarker.positions);
 
         addNewImage();
 
@@ -77,11 +92,8 @@ function refreshMarkers() {
 
             console.log(point);
 
-            var firstPoint = positions[0];
-            var secondPoint = positions[1];
-
-            var deltaX = firstPoint.x - secondPoint.x;
-            var deltaY = firstPoint.y - secondPoint.y;
+            var deltaX = firstMiddle.x - secondMiddle.x;
+            var deltaY = firstMiddle.y - secondMiddle.y;
 
             ball.x = point.x;
             ball.y = point.y;
