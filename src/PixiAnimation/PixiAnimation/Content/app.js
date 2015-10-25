@@ -223,7 +223,6 @@ function changeDirectionCausedByObstacle(point, obstacle) {
 }
 
 function gameLoop() {
-
     //Loop this function 60 times per second
     requestAnimationFrame(gameLoop);
 
@@ -243,7 +242,7 @@ function gameLoop() {
 
         startNew();
     }
-    //Render the stage
+
     renderer.render(stage);
 }
 
