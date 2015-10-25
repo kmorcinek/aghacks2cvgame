@@ -38,15 +38,7 @@ function addNewImage() {
 
     var radnomImage = "http://178.62.103.235/zdjecie?game_name=" + Constants.gameName + "&pic=" + pictureRefreshCounter;
 
-    if (globalTexture) {
-        globalTexture.destroy(true);
-    }
-
-    globalTexture = PIXI.Texture.fromImage(radnomImage);
-    obstacle = new PIXI.Sprite(globalTexture);
-    obstacle.x = 0;
-    obstacle.y = 0;
-    stage.addChild(obstacle);
+    document.body.style.backgroundImage = "url('" + radnomImage + "')";
 }
 
 //Define any variables that are used in more than one function
@@ -72,7 +64,7 @@ function refreshMarkers() {
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
-        //addNewImage();
+        addNewImage();
 
         if (marker) {
             var positions = marker.positions;
@@ -149,24 +141,6 @@ function changeDirectionCausedByObstacle(point, obstacle) {
     }
 }
 
-function changeDirection(point) {
-    if (point.x + point.width >= sizeX) {
-        point.invertVX();
-    }
-
-    if (point.x <= 0) {
-        point.invertVX();
-    }
-
-    if (point.y + point.height >= sizeY) {
-        point.invertVY();
-    }
-
-    if (point.y <= 0) {
-        point.invertVY();
-    }
-}
-
 function gameLoop() {
 
     //Loop this function 60 times per second
@@ -176,7 +150,7 @@ function gameLoop() {
 
     //changeDirectionCausedByObstacle(cat, obstacle);
     // Obstacle must be resolved first
-    changeDirection(ball);
+    ball.TryChangeDirection(sizeX, sizeY);
 
     var boom = hitTestRectangle(ball, door);
     if (boom) {
