@@ -12,10 +12,10 @@ var sizeX = 800;
 var sizeY = 600;
 
 var stage = new Container(),
-    renderer = autoDetectRenderer(sizeX, sizeY, {"transparent":true});
+    renderer = autoDetectRenderer(sizeX, sizeY, { "transparent": true });
 document.body.appendChild(renderer.view);
 
-$(function() {
+$(function () {
     loader
         .add("images/blob.png")
         .add("images/door.png")
@@ -55,12 +55,20 @@ var cannon;
 
 var obstacles = [];
 
+var destroyObstacles = function () {
+    _.each(obstacles, function (obstacle) {
+        stage.removeChild(obstacle);
+    });
+
+    obstacles = [];
+}
+
 function refreshCallback() {
     var firstMarkerId = "64";
     var secondMarkerId = "908";
     var targetMarkerId = "299";
 
-    var calculateMiddle = function(corners) {
+    var calculateMiddle = function (corners) {
         var sumX = 0, sumY = 0;
 
         for (var i = 0; i < 4; i++) {
@@ -71,20 +79,16 @@ function refreshCallback() {
         return { "x": sumX / 4, "y": sumY / 4 };
     }
 
-    var setObstacles = function(markers) {
+    var setObstacles = function (markers) {
+        destroyObstacles();
+
         var obstacleMarkers = _.filter(markers, function (m) {
             return m.id !== firstMarkerId
                 && m.id !== secondMarkerId
                 && m.id !== targetMarkerId;
         });
 
-        _.each(obstacles, function(obstacle) {
-            stage.removeChild(obstacle);
-        });
-
-        obstacles = [];
-            
-        _.each(obstacleMarkers, function(marker) {
+        _.each(obstacleMarkers, function (marker) {
             var middle = calculateMiddle(marker.positions);
             obstacles.push(addObstacle(middle.x, middle.y));
         });
@@ -115,7 +119,7 @@ function refreshCallback() {
 
             ball.vx = deltaX * Constants.speedRatio;
             ball.vy = deltaY * Constants.speedRatio;
-            
+
             var targetMarker = _.findWhere(list, { "id": "299" });
             if (targetMarker) {
                 var targetMiddle = calculateMiddle(targetMarker.positions);
@@ -146,7 +150,7 @@ function startNew() {
     ball.y = ball.height / 2 + 1;
     ball.anchor.x = 0.5;
     ball.anchor.y = 0.5;
-    
+
     // initial speed
     ball.vx = 0;
     ball.vy = 0;
@@ -164,6 +168,8 @@ function startNew() {
     cannon.y = 0;
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
+
+    destroyObstacles();
 }
 
 function setup() {
@@ -224,7 +230,7 @@ function gameLoop() {
     ball.move();
 
     // multiple obstacles nearby will cause problems!
-    _.each(obstacles, function(obstacle) {
+    _.each(obstacles, function (obstacle) {
         changeDirectionCausedByObstacle(ball, obstacle);
     });
 
@@ -235,8 +241,7 @@ function gameLoop() {
     if (boom) {
         alert("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOMMMMMMMMMM");
 
-        ball.invertVX();
-        ball.invertVY();
+        startNew();
     }
     //Render the stage
     renderer.render(stage);
