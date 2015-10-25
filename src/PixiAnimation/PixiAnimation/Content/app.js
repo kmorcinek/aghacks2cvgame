@@ -102,6 +102,8 @@ function setup() {
     ball = new Sprite(resources["images/blob.png"].texture);
     ball.x = 96;
     ball.y = 66;
+    ball.anchor.x = 0.5;
+    ball.anchor.y = 0.5;
     
     // initial speed
     ball.vx = 0;
@@ -112,6 +114,8 @@ function setup() {
     target = new Sprite(resources["images/door.png"].texture);
     target.x = sizeX - 50;
     target.y = sizeY - 50;
+    target.anchor.x = 0.5;
+    target.anchor.y = 0.5;
     stage.addChild(target);
 
     cannon = new Sprite(resources["images/cannon.png"].texture);
