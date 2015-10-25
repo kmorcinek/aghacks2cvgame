@@ -1,1 +1,70 @@
-dsadasd
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+</head>
+
+
+<body>
+	<div>
+</div>
+<img id="place" src="http://178.62.103.235/zdjecie?game_name=qwerty"></img>
+
+<canvas id ="deb" width = "800" height = "600"></canvas>
+</body>
+<script type="text/javascript">
+var prevDetector = "";
+var inc = 0;
+function processPicture(){
+	inc += 1;
+	var link = "http://178.62.103.235/zdjecie?game_name=qwerty" +"&pic=" + inc.toString();
+	$("#place").attr("src",link);
+/*
+       .attr('id', id)
+       .text('unsupported browser')
+       .width(this.width)
+       .height(this.height)
+       .appendTo(location);
+       $("#deb").text(pic);
+    context = this.element.getContext("2d");
+	context.drawImage(pic,0,0);*/
+}
+function processDetector(data){
+	/*var j = $.parseJSON(data);
+
+	for (i = 0; i < j.length; i++) { 
+		//
+    	if (j[i].id === "76"){
+    		console.log("dzialam");
+    		var canv = document.getElementById("deb");
+    		var ctx = canv.getContext("2d");
+    		var pos = j[i].positions;
+    		ctx.fillStyle = '#f00';
+			ctx.beginPath();
+			ctx.moveTo(pos[0].x, pos[0].y);
+			ctx.lineTo(pos[1].x, pos[1].y);
+			ctx.lineTo(pos[2].x, pos[2].y);
+			ctx.lineTo(pos[3].x, pos[3].y);
+			ctx.closePath();
+			ctx.fill();
+
+    	}
+	}
+	
+*/
+}
+	
+
+function retrier(){
+	processPicture();
+	$.get('http://178.62.103.235/detector?game_name=qwerty',function(data){processDetector(data)})
+
+	
+}
+	$(document).ready(function(){setInterval(function(){retrier();}, 2000);});
+</script>
+
+</html>
