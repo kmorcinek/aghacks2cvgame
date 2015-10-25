@@ -7,10 +7,12 @@ var Container = PIXI.Container,
     Texture = PIXI.Texture,
     Sprite = PIXI.Sprite;
 
+// Size of canvas
 var sizeX = 512 * 2;
 var sizeY = 512;
+
 var stage = new Container(),
-    renderer = autoDetectRenderer(sizeX, sizeY);
+    renderer = autoDetectRenderer(sizeX, sizeY, {"transparent":true});
 document.body.appendChild(renderer.view);
 
 $(function() {
@@ -18,56 +20,39 @@ $(function() {
         .add("images/cat.png")
         .add("images/door.png")
         .add("images/wolf.png")
-        .add("http://178.62.103.235/?game_name=qwerty&pic=true")
         .load(setup);
 
-    function myFunction() {
+    function refresh() {
         setInterval(function () { refreshMarkers(); }, 3000);
     }
 
-    myFunction();
+    refresh();
 });
 
 var pictureRefreshCounter = 0;
 
+var globalTexture;
+
 function addNewImage() {
     pictureRefreshCounter++;
-    var sprite = PIXI.Sprite.fromImage("http://178.62.103.235/?game_name=qwerty&pic=" + pictureRefreshCounter);
-    sprite.position.x = 100;
-    sprite.position.y = 100;
-    stage.addChild(sprite);
 
-    ////Add text as a child of the Sprite
-    //var text = new PIXI.Text('my custom text',
-    //    {
-    //        font: '12px Arial',
-    //        fill: 0x666666,
-    //        align: 'center',
-    //        cacheAsBitmap: true, // for better performance
-    //        height: 57,
-    //        width: 82
-    //    });
-    //sprite.addChild(text);
+    var radnomImage = "http://178.62.103.235/zdjecie?game_name=" + Constants.gameName + "&pic=" + pictureRefreshCounter;
+
+    if (globalTexture) {
+        globalTexture.destroy(true);
+    }
+
+    globalTexture = PIXI.Texture.fromImage(radnomImage);
+    obstacle = new PIXI.Sprite(globalTexture);
+    obstacle.x = 0;
+    obstacle.y = 0;
+    stage.addChild(obstacle);
 }
 
 //Define any variables that are used in more than one function
-var cat;
+var ball;
 var door;
 var obstacle;
-
-Sprite.prototype.invertVX = function () {
-    // forget how to do self=this better 
-    this.vx = -this.vx;
-}
-
-Sprite.prototype.invertVY = function () {
-    this.vy = -this.vy;
-}
-
-Sprite.prototype.move = function () {
-    this.x += this.vx;
-    this.y += this.vy;
-}
 
 function refreshMarkers() {
     var trimToFitVenue = function(pointValue) {
@@ -82,11 +67,12 @@ function refreshMarkers() {
         }
     }
 
-    var url = "http://178.62.103.235/?game_name=qwerty";
+    var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
+    //var url = "data/markers.json";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
-        addNewImage();
+        //addNewImage();
 
         if (marker) {
             var positions = marker.positions;
@@ -97,8 +83,18 @@ function refreshMarkers() {
 
             console.log(point);
 
-            cat.x = point.x;
-            cat.y = point.y;
+            var firstPoint = positions[0];
+            var secondPoint = positions[1];
+
+            var deltaX = firstPoint.x = secondPoint.x;
+            var deltaY = firstPoint.y = secondPoint.y;
+
+            ball.x = point.x;
+            ball.y = point.y;
+
+            var speedRatio = 0.01;
+            ball.vx = deltaX * speedRatio;
+            ball.vy = deltaY * speedRatio;
         } else {
             console.log("marker not found");
         }
@@ -106,23 +102,20 @@ function refreshMarkers() {
 }
 
 function setup() {
-    cat = new Sprite(resources["images/cat.png"].texture);
-    cat.x = 96;
-    cat.y = 66;
-    cat.vx = 2;
-    cat.vy = 3;
+    ball = new Sprite(resources["images/cat.png"].texture);
+    ball.x = 96;
+    ball.y = 66;
+    
+    // initial speed
+    ball.vx = 2;
+    ball.vy = 3;
 
-    stage.addChild(cat);
+    stage.addChild(ball);
 
     door = new Sprite(resources["images/door.png"].texture);
     door.x = sizeX - 50;
     door.y = sizeY - 50;
     stage.addChild(door);
-
-    obstacle = new Sprite(resources["http://178.62.103.235/?game_name=qwerty&pic=true"].texture);
-    obstacle.x = 0;
-    obstacle.y = sizeY - 140;
-    stage.addChild(obstacle);
 
     gameLoop();
 }
@@ -179,18 +172,18 @@ function gameLoop() {
     //Loop this function 60 times per second
     requestAnimationFrame(gameLoop);
 
-    cat.move();
+    ball.move();
 
     //changeDirectionCausedByObstacle(cat, obstacle);
     // Obstacle must be resolved first
-    changeDirection(cat);
+    changeDirection(ball);
 
-    var boom = hitTestRectangle(cat, door);
+    var boom = hitTestRectangle(ball, door);
     if (boom) {
         alert("boom");
 
-        cat.invertVX();
-        cat.invertVY();
+        ball.invertVX();
+        ball.invertVY();
     }
     //Render the stage
     renderer.render(stage);
