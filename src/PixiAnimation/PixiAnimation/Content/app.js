@@ -100,8 +100,8 @@ function refreshCallback() {
 
 function setup() {
     ball = new Sprite(resources["images/blob.png"].texture);
-    ball.x = 96;
-    ball.y = 66;
+    ball.x = ball.width / 2 + 1;
+    ball.y = ball.height / 2 + 1;
     ball.anchor.x = 0.5;
     ball.anchor.y = 0.5;
     
@@ -124,7 +124,7 @@ function setup() {
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
     cannon.rotation = 0.5;
-    stage.addChild(cannon);
+    //stage.addChild(cannon);
 
     gameLoop();
 }

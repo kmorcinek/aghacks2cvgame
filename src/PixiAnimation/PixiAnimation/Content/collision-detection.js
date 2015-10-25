@@ -7,10 +7,10 @@ function hitTestRectangle(r1, r2) {
     hit = false;
 
     //Find the center points of each sprite
-    r1.centerX = r1.x + r1.width / 2;
-    r1.centerY = r1.y + r1.height / 2;
-    r2.centerX = r2.x + r2.width / 2;
-    r2.centerY = r2.y + r2.height / 2;
+    //r1.centerX = r1.x + r1.width / 2;
+    //r1.centerY = r1.y + r1.height / 2;
+    //r2.centerX = r2.x + r2.width / 2;
+    //r2.centerY = r2.y + r2.height / 2;
 
     //Find the half-widths and half-heights of each sprite
     r1.halfWidth = r1.width / 2;
@@ -19,8 +19,8 @@ function hitTestRectangle(r1, r2) {
     r2.halfHeight = r2.height / 2;
 
     //Calculate the distance vector between the sprites
-    vx = r1.centerX - r2.centerX;
-    vy = r1.centerY - r2.centerY;
+    vx = r1.x - r2.x;
+    vy = r1.y - r2.y;
 
     //Figure out the combined half-widths and half-heights
     combinedHalfWidths = r1.halfWidth + r2.halfWidth;

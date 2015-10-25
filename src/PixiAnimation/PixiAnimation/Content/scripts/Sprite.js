@@ -13,19 +13,19 @@ PIXI.Sprite.prototype.move = function () {
 }
 
 PIXI.Sprite.prototype.TryChangeDirection= function (sizeX, sizeY) {
-    if (this.x + this.width >= sizeX) {
+    if (this.x + (this.width / 2) > sizeX) {
         this.invertVX();
     }
 
-    if (this.x <= 0) {
+    if (this.x - (this.width / 2) < 0) {
         this.invertVX();
     }
 
-    if (this.y + this.height >= sizeY) {
+    if (this.y + (this.height / 2) > sizeY) {
         this.invertVY();
     }
 
-    if (this.y <= 0) {
+    if (this.y - (this.width / 2) < 0) {
         this.invertVY();
     }
 }
