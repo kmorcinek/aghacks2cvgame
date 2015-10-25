@@ -78,13 +78,13 @@ function refreshMarkers() {
             var firstPoint = positions[0];
             var secondPoint = positions[1];
 
-            var deltaX = firstPoint.x = secondPoint.x;
-            var deltaY = firstPoint.y = secondPoint.y;
+            var deltaX = firstPoint.x - secondPoint.x;
+            var deltaY = firstPoint.y - secondPoint.y;
 
             ball.x = point.x;
             ball.y = point.y;
 
-            var speedRatio = 0.01;
+            var speedRatio = 0.02;
             ball.vx = deltaX * speedRatio;
             ball.vy = deltaY * speedRatio;
         } else {
@@ -99,8 +99,8 @@ function setup() {
     ball.y = 66;
     
     // initial speed
-    ball.vx = 2;
-    ball.vy = 3;
+    ball.vx = 0;
+    ball.vy = 0;
 
     stage.addChild(ball);
 
