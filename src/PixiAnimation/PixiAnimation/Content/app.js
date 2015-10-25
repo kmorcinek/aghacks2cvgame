@@ -8,8 +8,8 @@ var Container = PIXI.Container,
     Sprite = PIXI.Sprite;
 
 // Size of canvas
-var sizeX = 512 * 2;
-var sizeY = 512;
+var sizeX = 800;
+var sizeY = 600;
 
 var stage = new Container(),
     renderer = autoDetectRenderer(sizeX, sizeY, {"transparent":true});
