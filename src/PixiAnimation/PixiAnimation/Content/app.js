@@ -22,13 +22,13 @@ $(function() {
         .add("images/obstacle.png")
         .add("images/cannon.png");
 
-    //loader
-    //    .load(setup);
+    loader
+        .load(setup);
 
-    testObstacleCollistion();
+    //testObstacleCollistion();
 
     function refresh() {
-        //setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
+        setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
     }
 
     refresh();
