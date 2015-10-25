@@ -141,17 +141,9 @@ var addObstacle = function (x, y) {
     return obstacle;
 }
 
-function setup() {
-    ball = new Sprite(resources["images/blob.png"].texture);
-
+function startNew() {
     ball.x = ball.width / 2 + 1;
     ball.y = ball.height / 2 + 1;
-
-    //if (Constants.runAtStartup) {
-    //    ball.x = ball.width / 2 + 1;
-    //    ball.y = ball.height / 2 + 1;
-    //}
-
     ball.anchor.x = 0.5;
     ball.anchor.y = 0.5;
     
@@ -163,26 +155,33 @@ function setup() {
         ball.vy = 7;
     }
 
-    stage.addChild(ball);
-
-    target = new Sprite(resources["images/small-chest.png"].texture);
     target.x = sizeX + 50;
     target.y = sizeY + 50;
     target.anchor.x = 0.5;
     target.anchor.y = 0.5;
-    stage.addChild(target);
 
-    cannon = new Sprite(resources["images/cannon.png"].texture);
     cannon.x = 0;
     cannon.y = 0;
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
+}
+
+function setup() {
+    ball = new Sprite(resources["images/blob.png"].texture);
+    stage.addChild(ball);
+
+    target = new Sprite(resources["images/small-chest.png"].texture);
+    stage.addChild(target);
+
+    cannon = new Sprite(resources["images/cannon.png"].texture);
     stage.addChild(cannon);
 
     if (Constants.showObstacles) {
         obstacles.push(addObstacle(500, 500));
         obstacles.push(addObstacle(300, 300));
     }
+
+    startNew();
 
     gameLoop();
 }
