@@ -88,9 +88,9 @@ function refreshCallback() {
             
             var targetMarker = _.findWhere(list, { "id": "299" });
             if (targetMarker) {
-                //var targetMiddle = calculateMiddle(targetMarker.positions);
-                //target.x = targetMarker.x;
-                //target.y = targetMarker.y;
+                var targetMiddle = calculateMiddle(targetMarker.positions);
+                target.x = targetMiddle.x;
+                target.y = targetMiddle.y;
             }
         } else {
             console.log("marker not found");
