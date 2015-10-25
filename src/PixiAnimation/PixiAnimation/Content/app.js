@@ -47,18 +47,6 @@ function addNewImage() {
     obstacle.x = 0;
     obstacle.y = 0;
     stage.addChild(obstacle);
-    
-    ////Add text as a child of the Sprite
-    //var text = new PIXI.Text('my custom text',
-    //    {
-    //        font: '12px Arial',
-    //        fill: 0x666666,
-    //        align: 'center',
-    //        cacheAsBitmap: true, // for better performance
-    //        height: 57,
-    //        width: 82
-    //    });
-    //sprite.addChild(text);
 }
 
 //Define any variables that are used in more than one function
