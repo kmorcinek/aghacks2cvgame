@@ -92,6 +92,7 @@ function refreshMarkers() {
     }
 
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
+    //var url = "data/markers.json";
     $.getJSON(url, function (list) {
         var marker = _.findWhere(list, { "id": "64" });
 
@@ -115,7 +116,7 @@ function refreshMarkers() {
             cat.x = point.x;
             cat.y = point.y;
 
-            var speedRatio = 0.3;
+            var speedRatio = 0.01;
             cat.vx = deltaX * speedRatio;
             cat.vy = deltaY * speedRatio;
         } else {
