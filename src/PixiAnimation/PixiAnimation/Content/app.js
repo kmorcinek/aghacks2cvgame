@@ -45,8 +45,9 @@ function addNewImage() {
 //Define any variables that are used in more than one function
 var ball;
 var target;
-var obstacle;
 var cannon;
+
+var obstacles = [];
 
 function refreshCallback() {
     var firstMarkerId = "64";
@@ -120,7 +121,7 @@ function setup() {
     ball.anchor.y = 0.5;
     
     // initial speed
-    ball.vx = 1;
+    ball.vx = 4;
     ball.vy = 7;
 
     stage.addChild(ball);
@@ -141,16 +142,18 @@ function setup() {
     stage.addChild(cannon);
 
     var addObstacle = function(x, y) {
-        var cannon = new Sprite(resources["images/obstacle.png"].texture);
-        cannon.x = x;
-        cannon.y = y;
-        cannon.anchor.x = 0.5;
-        cannon.anchor.y = 0.5;
-        stage.addChild(cannon);
+        var obstacle = new Sprite(resources["images/obstacle.png"].texture);
+        obstacle.x = x;
+        obstacle.y = y;
+        obstacle.anchor.x = 0.5;
+        obstacle.anchor.y = 0.5;
+        stage.addChild(obstacle);
+
+        return obstacle;
     }
 
-    addObstacle(500, 500);
-    addObstacle(300, 300);
+    obstacles.push(addObstacle(500, 500));
+    obstacles.push(addObstacle(300, 300));
 
     gameLoop();
 }
@@ -176,11 +179,11 @@ function changeDirectionCausedByObstacle(point, obstacle) {
     // try if going back will cause to not to be overlapping
     var clone = cloneMovingObjectProperties(point);
     clone.x -= clone.vx;
-    if (hitTestRectangle(clone, object)) {
+    if (hitTestRectangle(clone, obstacle)) {
         // not overlapping anymore to so in x axis we go back 
-        point.invertVX();
+        point.vx = -point.vx;
     } else {
-        point.invertVY();
+        point.vy = -point.vy;
     }
 }
 
@@ -191,7 +194,11 @@ function gameLoop() {
 
     ball.move();
 
-    //changeDirectionCausedByObstacle(cat, obstacle);
+    // multiple obstacles nearby will cause problems!
+    _.each(obstacles, function(obstacle) {
+        changeDirectionCausedByObstacle(ball, obstacle);
+    });
+
     // Obstacle must be resolved first
     ball.TryChangeDirection(sizeX, sizeY);
 
