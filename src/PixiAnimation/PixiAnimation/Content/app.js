@@ -183,7 +183,8 @@ function changeDirectionCausedByObstacle(point, obstacle) {
     // try if going back will cause to not to be overlapping
     var clone = cloneMovingObjectProperties(point);
     clone.x -= clone.vx;
-    if (hitTestRectangle(clone, obstacle)) {
+    // very important
+    if (!hitTestRectangle(clone, obstacle)) {
         // not overlapping anymore to so in x axis we go back 
         point.vx = -point.vx;
     } else {
@@ -229,6 +230,8 @@ function testObstacleCollistion() {
     object.y = 0;
     object.vx = 10;
     object.vy = 0;
+    object.width = 32;
+    object.height = 32;
     // width height = 32
 
     var obstacle = new Sprite(resources["images/door.png"].texture);
@@ -236,8 +239,16 @@ function testObstacleCollistion() {
     obstacle.y = 0;
     obstacle.vx = 0;
     obstacle.vy = 0;
+    obstacle.width = 32;
+    obstacle.height = 32;
     // width height = 32
 
     object.move();
-    assert(hitTestRectangle(object, obstacle));
+
+    var isHit = hitTestRectangle(object, obstacle);
+    assert(isHit);
+
+    changeDirectionCausedByObstacle(object, obstacle);
+
+    assert(object.vx === -10);
 }
