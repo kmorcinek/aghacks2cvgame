@@ -20,8 +20,12 @@ $(function() {
         .add("images/blob.png")
         .add("images/door.png")
         .add("images/obstacle.png")
-        .add("images/cannon.png")
-        .load(setup);
+        .add("images/cannon.png");
+
+    //loader
+    //    .load(setup);
+
+    testObstacleCollistion();
 
     function refresh() {
         //setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
@@ -223,14 +227,16 @@ function testObstacleCollistion() {
     var object = new Sprite(resources["images/door.png"].texture);
     object.x = 0;
     object.y = 0;
-    object.width = 10;
-    object.height = 10;
+    object.vx = 10;
+    object.vy = 0;
+    // width height = 32
 
-    var obstacle = new Sprite(resources["images/wolf.png"].texture);
-    object.x = 15;
-    object.y = 0;
-    object.width = 10;
-    object.height = 10;
+    var obstacle = new Sprite(resources["images/door.png"].texture);
+    obstacle.x = 32 + 5;
+    obstacle.y = 0;
+    obstacle.vx = 0;
+    obstacle.vy = 0;
+    // width height = 32
 
     object.move();
     assert(hitTestRectangle(object, obstacle));
