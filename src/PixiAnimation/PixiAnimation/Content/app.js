@@ -101,9 +101,8 @@ function refreshMarkers() {
             cannon.x = secondMiddle.x;
             cannon.y = secondMiddle.y;
 
-            var speedRatio = 0.02;
-            ball.vx = deltaX * speedRatio;
-            ball.vy = deltaY * speedRatio;
+            ball.vx = deltaX * Constants.speedRatio;
+            ball.vy = deltaY * Constants.speedRatio;
         } else {
             console.log("marker not found");
         }
