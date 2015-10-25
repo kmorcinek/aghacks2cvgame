@@ -20,7 +20,8 @@ $(function() {
         .add("images/blob.png")
         .add("images/door.png")
         .add("images/obstacle.png")
-        .add("images/cannon.png");
+        .add("images/cannon.png")
+        .add("images/chest.png");
 
     loader
         .load(setup);
@@ -163,7 +164,7 @@ function setup() {
 
     stage.addChild(ball);
 
-    target = new Sprite(resources["images/door.png"].texture);
+    target = new Sprite(resources["images/chest.png"].texture);
     target.x = sizeX + 50;
     target.y = sizeY + 50;
     target.anchor.x = 0.5;
