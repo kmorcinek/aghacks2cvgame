@@ -44,7 +44,7 @@ function addNewImage() {
 
 //Define any variables that are used in more than one function
 var ball;
-var door;
+var target;
 var obstacle;
 var cannon;
 
@@ -60,26 +60,6 @@ function refreshCallback() {
         return { "x": sumX / 4, "y": sumY / 4 };
     }
 
-    var refreshBoard = function (marker, secondMarker) {
-        addNewImage();
-
-        var firstMiddle = calculateMiddle(marker.positions);
-        var secondMiddle = calculateMiddle(secondMarker.positions);
-
-        var deltaX = firstMiddle.x - secondMiddle.x;
-        var deltaY = firstMiddle.y - secondMiddle.y;
-
-        ball.x = firstMiddle.x;
-        ball.y = firstMiddle.y;
-
-        cannon.x = secondMiddle.x;
-        cannon.y = secondMiddle.y;
-        cannon.rotation = Math.atan(deltaX / deltaY);
-
-        ball.vx = deltaX * Constants.speedRatio;
-        ball.vy = deltaY * Constants.speedRatio;
-    }
-
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     //var url = "data/markers.json";
     $.getJSON(url, function (list) {
@@ -87,7 +67,31 @@ function refreshCallback() {
         var secondMarker = _.findWhere(list, { "id": "908" });
 
         if (marker && secondMarker) {
-            refreshBoard(marker, secondMarker);
+            addNewImage();
+
+            var firstMiddle = calculateMiddle(marker.positions);
+            var secondMiddle = calculateMiddle(secondMarker.positions);
+
+            var deltaX = firstMiddle.x - secondMiddle.x;
+            var deltaY = firstMiddle.y - secondMiddle.y;
+
+            ball.x = firstMiddle.x;
+            ball.y = firstMiddle.y;
+
+            cannon.x = secondMiddle.x;
+            cannon.y = secondMiddle.y;
+            var alpha = deltaX / deltaY;
+            cannon.rotation = (2 * Math.atan(alpha)) / (1 - (Math.atan(alpha), 2) * (Math.atan(alpha), 2));
+
+            ball.vx = deltaX * Constants.speedRatio;
+            ball.vy = deltaY * Constants.speedRatio;
+            
+            var targetMarker = _.findWhere(list, { "id": "299" });
+            if (targetMarker) {
+                //var targetMiddle = calculateMiddle(targetMarker.positions);
+                //target.x = targetMarker.x;
+                //target.y = targetMarker.y;
+            }
         } else {
             console.log("marker not found");
         }
@@ -105,10 +109,10 @@ function setup() {
 
     stage.addChild(ball);
 
-    door = new Sprite(resources["images/door.png"].texture);
-    door.x = sizeX - 50;
-    door.y = sizeY - 50;
-    stage.addChild(door);
+    target = new Sprite(resources["images/door.png"].texture);
+    target.x = sizeX - 50;
+    target.y = sizeY - 50;
+    stage.addChild(target);
 
     cannon = new Sprite(resources["images/cannon.png"].texture);
     cannon.x = 0;
@@ -161,7 +165,7 @@ function gameLoop() {
     // Obstacle must be resolved first
     ball.TryChangeDirection(sizeX, sizeY);
 
-    var boom = hitTestRectangle(ball, door);
+    var boom = hitTestRectangle(ball, target);
     if (boom) {
         alert("boom");
 
