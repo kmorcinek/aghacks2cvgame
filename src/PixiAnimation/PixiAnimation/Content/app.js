@@ -75,13 +75,13 @@ function refreshMarkers() {
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
     //var url = "data/markers.json";
     $.getJSON(url, function (list) {
+        addNewImage();
+
         var marker = _.findWhere(list, { "id": "64" });
         var secondMarker = _.findWhere(list, { "id": "908" });
 
         var firstMiddle = calculateMiddle(marker.positions);
         var secondMiddle = calculateMiddle(secondMarker.positions);
-
-        addNewImage();
 
         if (marker) {
             var positions = marker.positions;
@@ -95,11 +95,11 @@ function refreshMarkers() {
             var deltaX = firstMiddle.x - secondMiddle.x;
             var deltaY = firstMiddle.y - secondMiddle.y;
 
-            ball.x = point.x;
-            ball.y = point.y;
+            ball.x = firstMiddle.x;
+            ball.y = firstMiddle.y;
 
-            cannon.x = point.x;
-            cannon.y = point.y;
+            cannon.x = secondMiddle.x;
+            cannon.y = secondMiddle.y;
 
             var speedRatio = 0.02;
             ball.vx = deltaX * speedRatio;
