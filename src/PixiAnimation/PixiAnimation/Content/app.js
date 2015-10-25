@@ -108,8 +108,8 @@ function refreshCallback() {
 
             cannon.x = secondMiddle.x;
             cannon.y = secondMiddle.y;
-            var alpha = deltaY / deltaX;
-            cannon.rotation = (2 * Math.atan(alpha)) / (1 - (Math.atan(alpha), 2) * (Math.atan(alpha), 2));
+            //var alpha = deltaY / deltaX;
+            //cannon.rotation = (2 * Math.atan(alpha)) / (1 - (Math.atan(alpha), 2) * (Math.atan(alpha), 2));
 
             ball.vx = deltaX * Constants.speedRatio;
             ball.vy = deltaY * Constants.speedRatio;
@@ -164,7 +164,6 @@ function setup() {
     cannon.y = 0;
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
-    cannon.rotation = 0.5;
     stage.addChild(cannon);
 
     if (Constants.showObstacles) {
