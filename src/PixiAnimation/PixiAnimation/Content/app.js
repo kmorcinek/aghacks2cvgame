@@ -99,7 +99,7 @@ function refreshCallback() {
 
             cannon.x = secondMiddle.x;
             cannon.y = secondMiddle.y;
-            var alpha = deltaX / deltaY;
+            var alpha = deltaY / deltaX;
             cannon.rotation = (2 * Math.atan(alpha)) / (1 - (Math.atan(alpha), 2) * (Math.atan(alpha), 2));
 
             ball.vx = deltaX * Constants.speedRatio;
