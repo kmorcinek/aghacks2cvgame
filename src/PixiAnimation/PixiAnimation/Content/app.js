@@ -24,7 +24,7 @@ $(function() {
         .load(setup);
 
     function refresh() {
-        setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
+        //setInterval(function () { refreshCallback(); }, Constants.refreshInternal);
     }
 
     refresh();
@@ -49,6 +49,10 @@ var obstacle;
 var cannon;
 
 function refreshCallback() {
+    var firstMarkerId = "64";
+    var secondMarkerId = "908";
+    var targetMarkerId = "299";
+
     var calculateMiddle = function(corners) {
         var sumX = 0, sumY = 0;
 
@@ -58,6 +62,16 @@ function refreshCallback() {
         }
 
         return { "x": sumX / 4, "y": sumY / 4 };
+    }
+
+    var setObstacles = function(markers) {
+        var obstacleMarkers = _.filter(markers, function (m) {
+            return m.id !== firstMarkerId
+                && m.id !== secondMarkerId
+                && m.id !== targetMarkerId;
+        });
+
+        
     }
 
     var url = "http://178.62.103.235/detector?game_name=" + Constants.gameName;
@@ -106,8 +120,8 @@ function setup() {
     ball.anchor.y = 0.5;
     
     // initial speed
-    ball.vx = 0;
-    ball.vy = 0;
+    ball.vx = 1;
+    ball.vy = 7;
 
     stage.addChild(ball);
 
@@ -124,7 +138,7 @@ function setup() {
     cannon.anchor.x = 0.5;
     cannon.anchor.y = 0.5;
     cannon.rotation = 0.5;
-    //stage.addChild(cannon);
+    stage.addChild(cannon);
 
     gameLoop();
 }
