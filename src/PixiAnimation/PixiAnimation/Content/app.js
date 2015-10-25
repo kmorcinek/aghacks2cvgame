@@ -22,11 +22,11 @@ $(function() {
         .add("images/wolf.png")
         .load(setup);
 
-    function myFunction() {
+    function refresh() {
         setInterval(function () { refreshMarkers(); }, 3000);
     }
 
-    myFunction();
+    refresh();
 });
 
 var pictureRefreshCounter = 0;
@@ -50,7 +50,7 @@ function addNewImage() {
 }
 
 //Define any variables that are used in more than one function
-var cat;
+var ball;
 var door;
 var obstacle;
 
@@ -89,12 +89,12 @@ function refreshMarkers() {
             var deltaX = firstPoint.x = secondPoint.x;
             var deltaY = firstPoint.y = secondPoint.y;
 
-            cat.x = point.x;
-            cat.y = point.y;
+            ball.x = point.x;
+            ball.y = point.y;
 
             var speedRatio = 0.01;
-            cat.vx = deltaX * speedRatio;
-            cat.vy = deltaY * speedRatio;
+            ball.vx = deltaX * speedRatio;
+            ball.vy = deltaY * speedRatio;
         } else {
             console.log("marker not found");
         }
@@ -102,15 +102,15 @@ function refreshMarkers() {
 }
 
 function setup() {
-    cat = new Sprite(resources["images/cat.png"].texture);
-    cat.x = 96;
-    cat.y = 66;
+    ball = new Sprite(resources["images/cat.png"].texture);
+    ball.x = 96;
+    ball.y = 66;
     
     // initial speed
-    cat.vx = 2;
-    cat.vy = 3;
+    ball.vx = 2;
+    ball.vy = 3;
 
-    stage.addChild(cat);
+    stage.addChild(ball);
 
     door = new Sprite(resources["images/door.png"].texture);
     door.x = sizeX - 50;
@@ -172,18 +172,18 @@ function gameLoop() {
     //Loop this function 60 times per second
     requestAnimationFrame(gameLoop);
 
-    cat.move();
+    ball.move();
 
     //changeDirectionCausedByObstacle(cat, obstacle);
     // Obstacle must be resolved first
-    changeDirection(cat);
+    changeDirection(ball);
 
-    var boom = hitTestRectangle(cat, door);
+    var boom = hitTestRectangle(ball, door);
     if (boom) {
         alert("boom");
 
-        cat.invertVX();
-        cat.invertVY();
+        ball.invertVX();
+        ball.invertVY();
     }
     //Render the stage
     renderer.render(stage);
